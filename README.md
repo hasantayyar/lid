@@ -66,4 +66,6 @@ Undocumented HID constants stay inside `IOKitLidAngleProvider`.
 
 ## License
 
+This project is licensed under the [MIT License](LICENSE).
+
 Product source in this repository is original. Phase 0 does not copy third-party sensor implementations. Public HID research is cited in `docs/hardware-compatibility.md`.
