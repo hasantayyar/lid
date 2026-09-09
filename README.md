@@ -2,7 +2,7 @@
 
 Privacy-first macOS menu bar utility that reads a compatible MacBook lid-angle sensor and runs local automations at configured thresholds.
 
-This repository is in **Phase 0**: sensor feasibility, a simulated provider, and a local diagnostic. There is no menu bar app yet.
+This repository ships a menu bar app (`Lid.app`) plus a `lid-sensor` diagnostic. Hardware support is still limited to models in the matrix below.
 
 ## Inspiration
 
@@ -26,7 +26,8 @@ Community reports mention a sensor on some 2019 16-inch MacBook Pro and later mo
 
 - Local only. No account, cloud, analytics, telemetry, or network client.
 - No camera, microphone, or screen capture.
-- Phase 0 requests no permissions.
+- Accessibility is requested only if you enable or test lock.
+- Music/Spotify may ask for Automation access after you enable media pause.
 - Diagnostics never include raw HID payloads, window titles, usernames, or file paths.
 
 ## Requirements
@@ -35,7 +36,24 @@ Community reports mention a sensor on some 2019 16-inch MacBook Pro and later mo
 - Xcode / Swift 6 toolchain
 - Compatible lid-angle hardware, or `--simulate`
 
-## Phase 0 commands
+## Build the menu bar app
+
+```bash
+./scripts/run-app.sh
+```
+
+That builds `artifacts/Lid.app` and opens it. Lid has no Dock icon. Look in the menu bar for the angle or the word `Lid`.
+
+Package only:
+
+```bash
+./scripts/package-app.sh debug
+open artifacts/Lid.app
+```
+
+Launch at login works only from that `.app` bundle, not from `swift run`.
+
+## Other commands
 
 ```bash
 swift test -Xswiftc -warnings-as-errors
@@ -60,7 +78,7 @@ LID_HARDWARE_TEST=1 swift test --filter HardwareProbeTests
 
 ## Architecture
 
-Reusable logic lives in the `LidCore` Swift package target. The `lid-sensor` executable is a thin diagnostic. A future Xcode app target will host the menu bar UI.
+Reusable logic lives in the `LidCore` Swift package target. `LidApp` is the menu bar UI. `lid-sensor` is the diagnostic CLI.
 
 Undocumented HID constants stay inside `IOKitLidAngleProvider`.
 
