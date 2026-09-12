@@ -44,14 +44,22 @@ Community reports mention a sensor on some 2019 16-inch MacBook Pro and later mo
 
 That builds `artifacts/Lid.app` and opens it. Lid has no Dock icon. Look in the menu bar for the angle or the word `Lid`.
 
-Package only:
+Package a drag-and-drop `Lid.app`:
 
 ```bash
-./scripts/package-app.sh debug
-open artifacts/Lid.app
+./scripts/package-app.sh release
 ```
 
-Launch at login works only from that `.app` bundle, not from `swift run`.
+That writes `artifacts/Lid.app`. Drag it into Applications, or open it from that folder.
+
+For a disk image with an Applications shortcut:
+
+```bash
+./scripts/package-dmg.sh
+open artifacts/Lid.dmg
+```
+
+Launch at login works only from that `.app` bundle, not from `swift run`. The package is ad-hoc signed for local use. Sharing it to other Macs still needs Developer ID signing and notarization.
 
 ## Other commands
 

@@ -16,7 +16,14 @@ mkdir -p "$APP/Contents/MacOS"
 mkdir -p "$APP/Contents/Resources"
 
 cp "$BINARY" "$APP/Contents/MacOS/Lid"
+chmod +x "$APP/Contents/MacOS/Lid"
+if [[ ! -f "$ROOT/Sources/LidApp/Resources/AppIcon.icns" ]]; then
+    "$ROOT/scripts/render-app-icon.sh"
+fi
+
 cp "$ROOT/Sources/LidApp/Resources/Info.plist" "$APP/Contents/Info.plist"
+cp "$ROOT/Sources/LidApp/Resources/AppIcon.icns" "$APP/Contents/Resources/AppIcon.icns"
 printf 'APPL????' > "$APP/Contents/PkgInfo"
+codesign --force --sign - --timestamp=none "$APP"
 
 echo "Built $APP"
